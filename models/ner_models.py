@@ -21,37 +21,37 @@ class PolishNER(NER):
     def FindNamedEntites(self, text):
         entities = self.ner_model(text)
         named_entities = [(ent.text, ent.label_) for ent in entities.ents ]
-        print(named_entities)
+        return named_entities
 
 class SlovenianNER(NER):
 
     def __init__(self):
-        self.ner_model = spacy.load('sl_core_news_trf')
+        self.ner_model = spacy.load('sl_core_news_trf', disable=["tagger", "parser", "attribute_ruler", "lemmatizer"])
         self.language = 'SL'
         
     def FindNamedEntites(self, text):
         entities = self.ner_model(text)
         named_entities = [(ent.text, ent.label_) for ent in entities.ents ]
-        print(named_entities)
+        return named_entities
 
 class EnglishNER(NER):
 
     def __init__(self):
-        self.ner_model = spacy.load('en_core_news_trf')
+        self.ner_model = spacy.load('en_core_web_trf', disable=["tagger", "parser", "attribute_ruler", "lemmatizer"])
         self.language = 'EN'
         
     def FindNamedEntites(self, text):
         entities = self.ner_model(text)
         named_entities = [(ent.text, ent.label_) for ent in entities.ents ]
-        print(named_entities)
+        return named_entities
 
 class CroatianNER(NER):
 
     def __init__(self):
-        self.ner_model = spacy.load('hr_core_news_lg')
+        self.ner_model = spacy.load('hr_core_news_lg', disable=["tok2vec", "tagger", "parser", "attribute_ruler", "lemmatizer"])
         self.language = 'HR'
         
     def FindNamedEntites(self, text):
         entities = self.ner_model(text)
         named_entities = [(ent.text, ent.label_) for ent in entities.ents ]
-        print(named_entities)
+        return named_entities
