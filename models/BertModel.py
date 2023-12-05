@@ -5,7 +5,7 @@ class BertModel(Model):
     
     def Transform(self,text1, text2):
         # Load a pre-trained BERT model
-        model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+        model = SentenceTransformer('paraphrase-MiniLM-L6-v2') 
 
         # Encode the texts into BERT embeddings
         embeddings = model.encode([text1, text2], convert_to_tensor=True)
