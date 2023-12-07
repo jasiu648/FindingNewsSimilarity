@@ -12,17 +12,27 @@ class Model(ABC):
 
 class BertModel(Model):
     
-    def Transform(self,text1, text2):
-        # Load a pre-trained BERT model
-        model = SentenceTransformer('paraphrase-MiniLM-L6-v2') # english
+    def __init__(self):
+        self.model = None
 
-        # Encode the texts into BERT embeddings
-        embeddings = model.encode([text1, text2], convert_to_tensor=True)
+    def Transform(self,text1, text2):
+        
+        embeddings = self.model.encode([text1, text2], convert_to_tensor=True)
 
         # Calculate cosine similarity between the embeddings
         similarity_score = util.pytorch_cos_sim(embeddings[0], embeddings[1])
 
         return similarity_score.item()
+    
+class PolishBertModel(BertModel):
+
+    def __init__(self):
+        self.model = SentenceTransformer("sdadas/mmlw-roberta-large")
+
+class EnglishBertModel(BertModel):
+
+    def __init__(self):
+        self.model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
     
 class TfIdfModel(Model):
     
