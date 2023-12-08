@@ -37,7 +37,7 @@ class EnglishBertModel(BertModel):
 class TfIdfModel(Model):
     
     def Transform(self, corpus, ngram_lower_bound = 2, ngram_upper_bound = 4):
-        tfidf = TfidfVectorizer(ngram_range=(2,4))
+        tfidf = TfidfVectorizer(ngram_range=(ngram_lower_bound,ngram_upper_bound))
 
         
         tfidf_matrix = tfidf.fit_transform(corpus)
