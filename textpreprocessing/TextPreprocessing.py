@@ -61,7 +61,7 @@ class PolishTextPreprocessor(TextPreprocessor):
 class EnglishTextPreprocessor(TextPreprocessor):
 
     def __init__(self):
-        self.language_model = spacy.load('en_core_news_trf')
+        self.language_model = spacy.load('en_core_web_trf')
         self.stopwords = self.create_set_from_file('stopwords/english_stopwords.txt')
 
 class CroatianTextPreprocessor(TextPreprocessor):
