@@ -43,5 +43,6 @@ class TfIdfModel(Model):
         tfidf_matrix = tfidf.fit_transform(corpus)
 
         cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+        
 
         return cosine_sim

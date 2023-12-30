@@ -27,7 +27,7 @@ class TextPreprocessor:
         #    stemmer = PorterStemmer()
         #    tokens = [stemmer.stem(word) for word in tokens]
 
-        return tokens
+        return ' '.join(tokens)
     
     def convert_to_BoW(self, text):
 

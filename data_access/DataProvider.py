@@ -17,7 +17,7 @@ class DataProvider():
         self.cursor = conn.cursor()
 
     def get_articles(self, language = 'PL', max_count = 100):
-        language = 'PL'
+        
         query = sql.SQL("""
             SELECT
                 tr.body,
@@ -37,3 +37,28 @@ class DataProvider():
         rows = self.cursor.fetchall()
 
         return rows
+
+class DataInput():
+    def __init__(self):
+
+        db_params = {
+            "database": "nlp_english",
+            "user": "postgres",
+            "password": "6487",
+            "host": "localhost",
+            "port": "5432",
+        }
+
+        conn = psycopg2.connect(**db_params)
+
+        self.cursor = conn.cursor()
+
+    def add_article(self, body = "", category = ""):
+
+        query = "INSERT INTO articles (body, category) VALUES (%s, %s)"
+        self.cursor.execute(query, (body, category))
+
+    def add_copy(self, body = "", original_id =""):
+
+        query = "INSERT INTO copies (main_id, body) VALUES (%s, %s)"
+        self.cursor.execute(query, (original_id, body))
