@@ -29,7 +29,7 @@ class DataProvider():
             JOIN articles ar ON ml.id_articles = ar.id
             JOIN texts ta ON ta.id = ar.id_texts
             JOIN texts tr ON tr.id = re.id_texts
-            WHERE ar.language = {}
+            WHERE ar.language = {} AND ml.similarity > 0.2
             LIMIT 101
         """).format(sql.Literal(language))
 
