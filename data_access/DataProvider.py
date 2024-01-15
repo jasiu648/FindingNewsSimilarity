@@ -68,6 +68,7 @@ class DataInput():
 
 class DataFromUrl():
 
+    @staticmethod
     def get_article_text(url):
         # Send a GET request to the URL
         response = requests.get(url)
