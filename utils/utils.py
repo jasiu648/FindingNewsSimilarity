@@ -22,3 +22,5 @@ def calculate_stats(float_list):
     print(f"Minimum: {min_value}")
     print(f"Average: {avg_value:.2f}")
     print(f"Median: {median_value:.2f}")
+
+    return (max_value,min_value, avg_value, median_value)
