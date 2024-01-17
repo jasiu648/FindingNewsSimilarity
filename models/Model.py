@@ -49,10 +49,8 @@ class TfIdfModel(Model):
     def Transform(self, corpus, ngram_lower_bound = 2, ngram_upper_bound = 4):
         tfidf = TfidfVectorizer(ngram_range=(ngram_lower_bound,ngram_upper_bound))
 
-        
         tfidf_matrix = tfidf.fit_transform(corpus)
 
         cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
         
-
         return cosine_sim

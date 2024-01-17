@@ -3,6 +3,7 @@ from psycopg2 import sql
 import requests
 from bs4 import BeautifulSoup
 import PyPDF2
+from abc import ABC, abstractmethod
 
 class DataProvider():
     
@@ -40,6 +41,11 @@ class DataProvider():
         rows = self.cursor.fetchall()
 
         return rows
+
+class DataAccesser(ABC):
+
+    def __init__(self):
+        pass
 
 class DataInput():
     def __init__(self):
