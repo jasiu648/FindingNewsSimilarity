@@ -33,7 +33,17 @@ class EnglishBertModel(BertModel):
 
     def __init__(self):
         self.model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
-    
+
+class SlovenianBertModel(BertModel):
+
+    def __init__(self):
+        self.model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
+
+class CroatianBertModel(BertModel):
+
+    def __init__(self):
+        self.model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
+
 class TfIdfModel(Model):
     
     def Transform(self, corpus, ngram_lower_bound = 2, ngram_upper_bound = 4):

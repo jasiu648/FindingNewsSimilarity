@@ -6,11 +6,13 @@ class NER(ABC):
 
     @abstractmethod
     def __init__(self):
+        self.ner_model = None
         self.language = 'None'
 
-    @abstractmethod
-    def FindNamedEntites():
-        pass
+    def FindNamedEntites(self, text):
+        entities = self.ner_model(text)
+        named_entities = [(ent.text, ent.label_) for ent in entities.ents ]
+        return named_entities
     
 class PolishNER(NER):
 
@@ -18,15 +20,12 @@ class PolishNER(NER):
         self.ner_model = spacy.load('pl_core_news_lg')
         self.language = 'PL'
         
-    def FindNamedEntites(self, text):
-        entities = self.ner_model(text)
-        named_entities = [(ent.text, ent.label_) for ent in entities.ents ]
-        return named_entities
 
 class SlovenianNER(NER):
 
     def __init__(self):
-        self.ner_model = spacy.load('sl_core_news_trf', disable=["tagger", "parser", "attribute_ruler", "lemmatizer"])
+        #self.ner_model = spacy.load('sl_core_news_trf', disable=["tagger", "parser", "attribute_ruler", "lemmatizer"])
+        self.ner_model = spacy.load('sl_core_news_trf')
         self.language = 'SL'
         
     def FindNamedEntites(self, text):

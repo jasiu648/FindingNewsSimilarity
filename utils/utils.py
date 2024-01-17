@@ -24,3 +24,13 @@ def calculate_stats(float_list):
     print(f"Median: {median_value:.2f}")
 
     return (max_value,min_value, avg_value, median_value)
+
+def count_jaccard_similarity(ner1, ner2):
+
+    set1 = set(ner1)
+    set2 = set(ner2)
+    intersection = len(set1.intersection(set2))
+    union = len(set1.union(set2))
+    if union == 0:
+        return 0
+    return (intersection / union)
