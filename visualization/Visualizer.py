@@ -5,6 +5,7 @@ import altair as alt
 
 class Visualizer():
 
+    @staticmethod
     def generate_wordcloud(text):
 
     # Generate a word cloud object

@@ -33,9 +33,9 @@ class DataProvider():
             JOIN articles ar ON ml.id_articles = ar.id
             JOIN texts ta ON ta.id = ar.id_texts
             JOIN texts tr ON tr.id = re.id_texts
-            WHERE ar.language = {}
-            LIMIT 100
-        """).format(sql.Literal(language))
+            WHERE ar.language = {language}
+            LIMIT {limit}
+        """).format(language=sql.Literal(language), limit=sql.Literal(max_count))
 
         self.cursor.execute(query)
         rows = self.cursor.fetchall()

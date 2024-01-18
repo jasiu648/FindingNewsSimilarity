@@ -24,10 +24,31 @@ class BertModel(Model):
 
         return similarity_score.item()
     
+    def Transform(self, text1, text2):
+        
+        embeddings = self.model.encode([text1, text2], convert_to_tensor=True)
+
+        # Calculate cosine similarity between the embeddings
+        similarity_score = util.pytorch_cos_sim(embeddings[0], embeddings[1])
+
+        return similarity_score.item()
+    
+    def Transform2(self, corpus):
+        # Encode the entire corpus into embeddings
+        embeddings = self.model.encode(corpus, convert_to_tensor=True)
+
+        # Calculate cosine similarity between all pairs of embeddings
+        similarity_matrix = util.pytorch_cos_sim(embeddings, embeddings)
+
+        # Convert the similarity matrix to a NumPy array
+        similarity_matrix_np = similarity_matrix.cpu().numpy()
+
+        return similarity_matrix_np
+    
 class PolishBertModel(BertModel):
 
     def __init__(self):
-        self.model = SentenceTransformer("sdadas/mmlw-roberta-large")
+        self.model = SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')
 
 class EnglishBertModel(BertModel):
 
