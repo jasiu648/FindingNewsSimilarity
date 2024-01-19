@@ -2,6 +2,8 @@ from models.model import *
 from textpreprocessing.TextPreprocessing import *
 from models.ner_models import *
 from utils.utils import count_jaccard_similarity
+from clustering.Cluster import *
+import openpyxl
 
 class Pipeline():
     
@@ -14,6 +16,8 @@ class Pipeline():
     def ProcessPipeline(self, corpus ,Nmin, Nmax, apply_preprocessing = True):
     
         results = [ResultsDataFrame() for i in range(len(corpus))]
+        text = [[" ", " "] for i in range(len(corpus))]
+
         tfidf_model = TfIdfModel()
 
         for i in range(len(corpus)):
@@ -41,12 +45,12 @@ class Pipeline():
             #Tfidf
 
             if(apply_preprocessing):
-                corpus[i][0] = self.preprocessing.preprocess_text(corpus[i][0], apply_lemmatization= True)
-                corpus[i][0] = ''.join(corpus[i][0])
-                corpus[i][1] = self.preprocessing.preprocess_text(corpus[i][1], apply_lemmatization= True)
-                corpus[i][1] = ''.join(corpus[i][1])
+                text[i][0] = self.preprocessing.preprocess_text(corpus[i][0], apply_lemmatization= True)
+                text[i][0] = ''.join(text[i][0])
+                text[i][1] = self.preprocessing.preprocess_text(corpus[i][1], apply_lemmatization= True)
+                text[i][1] = ''.join(text[i][1])
 
-            tfidf_matrix = tfidf_model.Transform(corpus[i], Nmin, Nmax)
+            tfidf_matrix = tfidf_model.Transform(text[i], Nmin, Nmax)
             results[i].tfidf_result = tfidf_matrix[0][1]
         
         return results
@@ -115,3 +119,29 @@ class PipelineFactory():
             print('Invalid option')
 
         return pipe
+
+class ReportFactory():
+
+    @staticmethod
+    def generate_similarity_report(corpus, language, filepath):
+        
+        factory = PipelineFactory()
+
+        pipe = factory.CreatePipeline(language)
+
+        result = pipe.ProcessPipeline(corpus, 2, 4, True)
+        workbook = openpyxl.Workbook()
+        sheet = workbook.active
+        headers = ['text1', 'text2', 'lexical','semantic','entities1', 'entities2', 'entitysimilarity']
+        sheet.append(headers)
+        data = []
+        
+        for i in range(len(corpus)):
+            data.append([corpus[i][0], corpus[i][1], result[i].tfidf_result, result[i].embedding_result, ', '.join(result[i].ner1), ', '.join(result[i].ner2), result[i].ner_result])
+
+        
+        for row in data:
+            sheet.append(row)
+
+        # Save the workbook to a file
+        workbook.save(filepath)
