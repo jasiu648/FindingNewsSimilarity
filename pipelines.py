@@ -145,3 +145,44 @@ class ReportFactory():
 
         # Save the workbook to a file
         workbook.save(filepath)
+    
+    @staticmethod
+    def generate_clustering_report(corpus, language, filepath, embeddings = True):
+
+        factory = PipelineFactory()
+
+        pipe = factory.CreatePipeline(language)
+
+        if(embeddings):
+            matrix = pipe.embedding_model.Transform2(corpus)
+        else:
+            tfidf = TfIdfModel()
+            matrix = tfidf.Transform(corpus)
+        
+        hc = KMeansCluster()
+
+        labels = hc.create_optimal_clusters(matrix, 15)
+        data = []
+        for i in range(len(corpus)):
+            data.append([corpus[i],labels[i]])
+
+
+        sorted_data = sorted(data, key=lambda x: x[1])
+
+        # Create a new Excel workbook
+        workbook = openpyxl.Workbook()
+
+        # Select the active sheet (default is the first sheet)
+        sheet = workbook.active
+
+        # Write headers (optional)
+        headers = ['text', 'clusterlabel']
+        sheet.append(headers)
+
+
+
+        for row in sorted_data:
+            sheet.append(row)
+
+        # Save the workbook to a file
+        workbook.save(filepath)
