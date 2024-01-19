@@ -30,9 +30,11 @@ class Pipeline():
 
             #Ner result
 
-            ner_1 = self.ner_model.FindNamedEntites(corpus[i][0])
-            ner_2 = self.ner_model.FindNamedEntites(corpus[i][1])
-            results[i].ner_result = count_jaccard_similarity(ner_1, ner_2)
+            a1 = self.ner_model.FindNamedEntites(corpus[i][0])
+            results[i].ner_1 = [inner_list[0] for inner_list in a1[i]]
+            a2 = self.ner_model.FindNamedEntites(corpus[i][1])
+            results[i].ner_2 = [inner_list[0] for inner_list in a2[i]]
+            results[i].ner_result = count_jaccard_similarity(results[i].ner_1, results[i].ner_2)
 
             #Tfidf
 
