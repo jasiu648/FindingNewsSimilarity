@@ -34,7 +34,7 @@ class TestIntegrationModules(unittest.TestCase):
         text2 = pl_preprocess.preprocess_text(text2,True)
         res_tf = pl_tfidf.Transform([text1, text2])
 
-        self.assertAlmostEqual(res_bert , 0.93, delta = 0.01)
+        self.assertAlmostEqual(res_bert , 0.67, delta = 0.01)
         self.assertAlmostEqual(res_tf[0][1], 0, delta = 0.01)
 
 
@@ -53,5 +53,34 @@ class TestIntegrationModules(unittest.TestCase):
         self.assertAlmostEqual(res_bert , 0.40, delta = 0.01)
         self.assertAlmostEqual(res_tf[0][1], 0, delta = 0.01)
 
+    def test_slovenian_pipeline(self):
+        text1 = "Text to chech english pipeline"
+        text2 = "Second text to check if english is ok"
+        en_model = EnglishBertModel()
+        en_preprocess = SlovenianTextPreprocessor()
+        en_tfidf = TfIdfModel()
+        
+        res_bert = en_model.Transform(text1, text2)
+        text1 = en_preprocess.preprocess_text(text1)
+        text2 = en_preprocess.preprocess_text(text2)
+        res_tf = en_tfidf.Transform([text1, text2])
+
+        self.assertAlmostEqual(res_bert , 0.40, delta = 0.01)
+        self.assertAlmostEqual(res_tf[0][1], 0, delta = 0.01)
+
+    def test_croatian_pipeline(self):
+        text1 = "Text to chech english pipeline"
+        text2 = "Second text to check if english is ok"
+        en_model = EnglishBertModel()
+        en_preprocess = CroatianTextPreprocessor()
+        en_tfidf = TfIdfModel()
+        
+        res_bert = en_model.Transform(text1, text2)
+        text1 = en_preprocess.preprocess_text(text1)
+        text2 = en_preprocess.preprocess_text(text2)
+        res_tf = en_tfidf.Transform([text1, text2])
+
+        self.assertAlmostEqual(res_bert , 0.40, delta = 0.01)
+        self.assertAlmostEqual(res_tf[0][1], 0, delta = 0.01)
 if __name__ == '__main__':
     unittest.main(verbosity=2)

@@ -2,7 +2,7 @@ from models.model import *
 from textpreprocessing.TextPreprocessing import *
 from models.ner_models import *
 from utils.utils import count_jaccard_similarity
-from clustering.Cluster import *
+from clustering.cluster import *
 import openpyxl
 
 class Pipeline():
