@@ -33,7 +33,7 @@ class KMeansCluster(Cluster):
         # Use the KneeLocator to find the "elbow" point automatically
         knee_locator = KneeLocator(range(1, max_clusters + 1), inertia_values, curve="convex", direction="decreasing")
         optimal_num_clusters = knee_locator.elbow
-
+        print(optimal_num_clusters)
         # Perform k-means clustering with the optimal number of clusters
         kmeans = KMeans(n_clusters=optimal_num_clusters, random_state=42, n_init=10)
         cluster_assignments = kmeans.fit_predict(similarity_matrix)

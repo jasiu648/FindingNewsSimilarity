@@ -161,7 +161,7 @@ class ReportFactory():
         
         hc = KMeansCluster()
 
-        labels = hc.create_optimal_clusters(matrix, 15)
+        labels = hc.create_optimal_clusters(matrix, 20)
         data = []
         for i in range(len(corpus)):
             data.append([corpus[i],labels[i]])
