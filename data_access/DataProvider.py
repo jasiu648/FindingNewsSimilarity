@@ -58,19 +58,34 @@ class DataInput():
             "port": "5432",
         }
 
-        conn = psycopg2.connect(**db_params)
+        self.conn = psycopg2.connect(**db_params)
 
-        self.cursor = conn.cursor()
+        self.cursor = self.conn.cursor()
 
     def add_article(self, body = "", category = ""):
 
         query = "INSERT INTO articles (body, category) VALUES (%s, %s)"
         self.cursor.execute(query, (body, category))
+        self.conn.commit()
 
     def add_copy(self, body = "", original_id =""):
 
         query = "INSERT INTO copies (main_id, body) VALUES (%s, %s)"
         self.cursor.execute(query, (original_id, body))
+        self.conn.commit()
+
+    def get_articles(self):
+        
+        query = sql.SQL("""
+            SELECT
+                *
+            FROM copies
+        """)
+
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+
+        return rows
 
 class DataFromUrl():
 
