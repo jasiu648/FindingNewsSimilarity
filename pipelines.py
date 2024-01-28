@@ -21,7 +21,7 @@ class Pipeline():
         tfidf_model = TfIdfModel()
 
         for i in range(len(corpus)):
-            
+ 
             #Embedding result
             bert_res = self.embedding_model.Transform(corpus[i][0],corpus[i][1])
             
@@ -49,7 +49,6 @@ class Pipeline():
                 text[i][0] = ''.join(text[i][0])
                 text[i][1] = self.preprocessing.preprocess_text(corpus[i][1], apply_lemmatization= True)
                 text[i][1] = ''.join(text[i][1])
-
             tfidf_matrix = tfidf_model.Transform(text[i], Nmin, Nmax)
             results[i].tfidf_result = tfidf_matrix[0][1]
         
