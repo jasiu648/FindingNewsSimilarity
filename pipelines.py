@@ -41,7 +41,6 @@ class Pipeline():
             results[i].ner2 = [inner_list[0] for inner_list in a2]
         
             results[i].ner_result = count_jaccard_similarity(results[i].ner1, results[i].ner2)
-
             #Tfidf
 
             if(apply_preprocessing):
