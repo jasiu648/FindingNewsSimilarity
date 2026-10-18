@@ -1,0 +1,1 @@
+Multilingual news similarity analysis project that compares articles using lexical, semantic, and named-entity-based methods. Built in Python with spaCy, SentenceTransformers, scikit-learn, and a Tkinter interface for article comparisons and reporting.
