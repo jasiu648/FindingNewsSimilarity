@@ -76,20 +76,11 @@ This project demonstrates how NLP can be applied to real-world text analysis tas
 git clone https://github.com/jasiu648/FindingNewsSimilarity.git
 cd FindingNewsSimilarity
 python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-On Windows:
-
-```bash
-.venv\Scripts\activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
 ## Required language models
-
-This project uses spaCy language models. If needed, install them with:
 
 ```bash
 python -m spacy download en_core_web_trf
@@ -97,6 +88,37 @@ python -m spacy download pl_core_news_lg
 python -m spacy download sl_core_news_trf
 python -m spacy download hr_core_news_lg
 ```
+
+## Configuration
+
+Database connectivity (used by `DataProvider`) is configured through environment variables. Copy `.env.example` to `.env` and fill in your credentials:
+
+```
+DB_NAME=nlpdatabase
+DB_USER=postgres
+DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+## Usage
+
+Run the desktop GUI:
+
+```bash
+python gui.py
+```
+
+Or use the pipeline directly in a notebook or script:
+
+```python
+from pipelines import PipelineFactory
+
+pipe = PipelineFactory.CreatePipeline('EN')
+results = pipe.ProcessPipeline([["article text 1", "article text 2"]], Nmin=2, Nmax=4)
+print(results[0].tfidf_result, results[0].embedding_result, results[0].ner_result)
+```
+
 
 ## Running the application
 

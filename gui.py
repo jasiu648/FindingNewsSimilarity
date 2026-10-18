@@ -4,7 +4,11 @@ import tkinter.ttk as ttk
 from tkinter import messagebox
 from tkinter import filedialog
 from tkinter import simpledialog
-from visualization.visualizer import *
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
+import numpy as np
+from visualization.Visualizer import *
+from data_access.DataProvider import *
 from pipelines import *
 class App:
 
@@ -204,36 +208,32 @@ class App:
 
     def import_file1(self):
         file_path = filedialog.askopenfilename(
-            title="Select a PDF File",
+            title="Select a file",
             filetypes=[("PDF files", "*.pdf"), ("Text files", "*.txt")]
         )
-
+        if not file_path:
+            return
+        self.article_1.delete(1.0, tk.END)
         if file_path.lower().endswith('.txt'):
             with open(file_path, 'r') as file:
-                content = file.read()
-                self.article_1.delete(1.0, tk.END)
-                self.article_1.insert(tk.END, content)
-
-        if self.article_1.get("1.0",'end-1c') == "":
-            self.article_1.delete(1.0, tk.END)
-
-        self.article_1.insert(tk.END, load_text(file_path))
+                self.article_1.insert(tk.END, file.read())
+        elif file_path.lower().endswith('.pdf'):
+            self.article_1.insert(tk.END, load_text(file_path))
 
 
     def import_file2(self):
         file_path = filedialog.askopenfilename(
-            title="Select a PDF File",
+            title="Select a file",
             filetypes=[("PDF files", "*.pdf"), ("Text files", "*.txt")]
         )
-
+        if not file_path:
+            return
+        self.article_2.delete(1.0, tk.END)
         if file_path.lower().endswith('.txt'):
             with open(file_path, 'r') as file:
-                content = file.read()
-                self.article_2.delete(1.0, tk.END)
-                self.article_2.insert(tk.END, content)
-
-        if self.article_2.get("1.0",'end-1c') == "":
-            self.article_2.delete(1.0, tk.END)
+                self.article_2.insert(tk.END, file.read())
+        elif file_path.lower().endswith('.pdf'):
+            self.article_2.insert(tk.END, load_text(file_path))
 
         self.article_2.insert(tk.END, load_text(file_path))
 
@@ -286,11 +286,6 @@ class App:
         close_button.pack(pady=10)
 
 
-
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import matplotlib.pyplot as plt
-import numpy as np
-from data_access.DataProvider import *
 
 
 def load_text(path):

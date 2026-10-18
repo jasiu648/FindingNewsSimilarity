@@ -27,27 +27,16 @@ def count_words(text):
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def create_histogram(data, threshold=700):
-    """
-    Create a histogram from a list of integers, ignoring values above a threshold.
-
-    Parameters:
-    - data (list of int): List of integers for the histogram.
-    - threshold (int): Values above this threshold will be ignored in the histogram.
-
-    Returns:
-    - None
-    """
-    # Filter values below or equal to the threshold
     filtered_data = np.array(data)[np.array(data) <= threshold]
-    
-    plt.hist(filtered_data, bins=10, edgecolor='black')  # Adjust the number of bins as needed
+    plt.hist(filtered_data, bins=10, edgecolor='black')
     plt.xlabel('Values')
     plt.ylabel('Frequency')
     plt.title('Histogram')
     plt.show()
 
-import statistics
+
 def calculate_stats(float_list):
     if not float_list:
         print("List is empty.")

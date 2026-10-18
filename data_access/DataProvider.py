@@ -1,3 +1,4 @@
+import os
 import psycopg2
 from psycopg2 import sql
 import requests
@@ -9,11 +10,11 @@ class DataProvider():
     
     def __init__(self):
         db_params = {
-            "database": "nlpdatabase",
-            "user": "postgres",
-            "password": "6487",
-            "host": "localhost",
-            "port": "5432",
+            "database": os.environ.get("DB_NAME", "nlpdatabase"),
+            "user": os.environ.get("DB_USER", "postgres"),
+            "password": os.environ["DB_PASSWORD"],
+            "host": os.environ.get("DB_HOST", "localhost"),
+            "port": os.environ.get("DB_PORT", "5432"),
         }
 
         conn = psycopg2.connect(**db_params)
@@ -51,11 +52,11 @@ class DataInput():
     def __init__(self):
 
         db_params = {
-            "database": "nlp_english",
-            "user": "postgres",
-            "password": "6487",
-            "host": "localhost",
-            "port": "5432",
+            "database": os.environ.get("DB_NAME", "nlp_english"),
+            "user": os.environ.get("DB_USER", "postgres"),
+            "password": os.environ["DB_PASSWORD"],
+            "host": os.environ.get("DB_HOST", "localhost"),
+            "port": os.environ.get("DB_PORT", "5432"),
         }
 
         self.conn = psycopg2.connect(**db_params)

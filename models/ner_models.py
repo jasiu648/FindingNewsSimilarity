@@ -24,7 +24,6 @@ class PolishNER(NER):
 class SlovenianNER(NER):
 
     def __init__(self):
-        #self.ner_model = spacy.load('sl_core_news_trf', disable=["tagger", "parser", "attribute_ruler", "lemmatizer"])
         self.ner_model = spacy.load('sl_core_news_trf')
         self.language = 'SL'
     

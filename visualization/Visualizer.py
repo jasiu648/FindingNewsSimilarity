@@ -20,7 +20,7 @@ class Visualizer():
         return wordcloud
 
         
-    def generate_bar_plot(tokens):
+    def generate_bar_plot(text):
         tokens = word_tokenize(text)
         text_list = Counter(tokens)
 
